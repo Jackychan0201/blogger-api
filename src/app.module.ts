@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './users/users.entity';
 import { Post } from './posts/posts.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { Post } from './posts/posts.entity';
         entities: [User, Post],
       }),
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
