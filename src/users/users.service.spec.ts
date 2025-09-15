@@ -38,7 +38,8 @@ describe('UsersService', () => {
     mockRepo.save.mockResolvedValue({ id: '1', ...userEntity });
 
     const result = await service.createUser(dto);
-    expect(result).toEqual({ id: '1', ...userEntity });
+    const userEntityWithoutPassword = { id: '1', email: dto.email };
+    expect(result).toEqual( {...userEntityWithoutPassword} );
     expect(bcrypt.hash).toHaveBeenCalledWith(dto.password, 10);
     expect(mockRepo.create).toHaveBeenCalledWith({ email: dto.email, password: hashedPassword });
     expect(mockRepo.save).toHaveBeenCalledWith(userEntity);
