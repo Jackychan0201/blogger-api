@@ -25,7 +25,10 @@ export class UsersService {
       password: hashedPassword,
     });
 
-    return this.usersRepository.save(user);
+    const savedUser = this.usersRepository.save(user);
+
+    const { password, ...result } = await savedUser;
+    return result as User;
   }
 
   async findByEmail(email: string): Promise<User | null> {
