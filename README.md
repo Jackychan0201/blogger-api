@@ -53,6 +53,9 @@ npm run start:dev
 npm run test
 ```
 
+When running the application, the Swagger documentation will be available via:
+http://localhost:3000/api
+
 [!NOTE]
 Make sure to have a PostgreSQL database running if you are not using Docker. 
 The environment variables are stored in the `.env` file.
