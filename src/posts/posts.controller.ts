@@ -4,6 +4,8 @@ import { PostsService } from './posts.service';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { CreatePostDto } from './dto/create.dto';
 import { UpdatePostDto } from './dto/update.dto';
+import type { Request } from 'express';
+import { JwtUser } from '../auth/jwt-user.type';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -13,8 +15,9 @@ export class PostsController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Post()
-  async createPost(@Body() dto: CreatePostDto, @Req() req) {  
-    return this.postsService.createPost(dto, req.user.userId);
+  async createPost(@Body() dto: CreatePostDto, @Req() req: Request) {  
+    const user = req.user as JwtUser;
+    return this.postsService.createPost(dto, user.userId);
   }
 
   @Get()
@@ -31,15 +34,17 @@ export class PostsController {
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  async updatePost( @Body() dto: UpdatePostDto, @Param('id') id: string, @Req() req) {
-    return this.postsService.updatePost(id, dto, req.user.userId);
+  async updatePost(@Body() dto: UpdatePostDto, @Param('id') id: string, @Req() req: Request) {
+    const user = req.user as JwtUser;
+    return this.postsService.updatePost(id, dto, user.userId);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  async deletePost(@Param('id') id: string, @Req() req) {
-    return this.postsService.deletePost(id, req.user.userId);
+  async deletePost(@Param('id') id: string, @Req() req: Request) {
+    const user = req.user as JwtUser;
+    return this.postsService.deletePost(id, user.userId);
   }
 
 }
